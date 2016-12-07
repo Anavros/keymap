@@ -74,6 +74,14 @@ a b c d e f g h i j k l m n o p q r s t u v w x y z
 Theory Crafting:
 Keys that are pressed with the same finger should be uncommon combinations.
 
+Collisions:
+ge:10 ec:18 eg:18 gu:18 ce:19 ue:50
+mainly g and e on right index finger
+solution: swap e with s and u with f
+   y u r f w j p d o ' - + #
+    a e h s g b n t l i :
+     z x c v q k m , . /
+
 Problems:
 
 
