@@ -52,17 +52,9 @@ Difficulty Map:
      z x c v b n m , . /
      6 3 2 4 6 4 2 3 4 3
 
-r r r m i i i i i m r p p
-^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^
-   p r m i i i i m r p p p p
-   2 2 2 3 4 4 3 2 2 2 3 3 5
-   ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^
-    p r m i i i i m r p p
-    1 1 1 1 3 3 1 1 1 1 4
-    ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^
-     r m i i i i i m r p
-     5 5 3 4 5 4 3 4 4 4
-     ^ ^ ^ ^ ^ ^ ^ ^ ^ ^
+2 2 2 3 4 4 3 2 2 2 3 3
+1 1 1 1 3 3 1 1 1 1 4
+5 5 3 4 5 4 3 4 4 4
 
 Most Used Keys:
 etsrnifo lad
