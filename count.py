@@ -1,7 +1,7 @@
 
 from sys import argv
 from operator import itemgetter
-from itertools import permutations
+import itertools
 import argparse
 
 # TODO: use stdin as input
@@ -50,12 +50,12 @@ def chars(path):
     return count
 
 
-def collisions(count, keys):
+def collisions(count, keys, n):
     colls = {}
-    for combo in permutations(keys):
+    for combo in itertools.permutations(keys, n):
+        combo = ''.join(combo)  # should be string, not tuple
         x = count.get(combo, 0)
-        if x:
-            colls[combo] = x
+        if x: colls[combo] = x
     return colls
 
 
@@ -64,12 +64,19 @@ def display(*counts):
         for c, n in sorted(count.items(), key=itemgetter(1)):
             print("'{}' {}".format(c, n))
 
-def main(path):
-    doubs = ngraphs(path, 2)
-    colls = collisions(doubs, "nbjpmk")
-    display(colls)
+
+def main(args):
+    count = ngraphs(args.file, args.ngram)
+    if args.collisions:
+        colls = collisions(count, args.collisions, args.ngram)
+        display(colls)
+    else:
+        display(count)
 
 
 if __name__ == '__main__':
-    assert len(argv) == 2, "Usage: {} <file>".format(argv[0])
-    main(argv[1])
+    parser = argparse.ArgumentParser()
+    parser.add_argument("file", default=None)
+    parser.add_argument("-n", "--ngram", type=int, default=1)
+    parser.add_argument("-c", "--collisions")
+    main(parser.parse_args())
