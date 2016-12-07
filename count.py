@@ -5,34 +5,6 @@ import argparse
 from operator import itemgetter
 
 
-def ngraphs(path, n):
-    count = {}
-    if path:
-        f = open(path, 'r')
-    else:
-        f = sys.stdin
-    while True:
-        di = f.read(n)
-        if not di: break
-        if ' ' in di or '\n' in di: continue
-        try:
-            count[di.lower()] += 1
-        except KeyError:
-            count[di.lower()] = 1
-    f.close()
-    return count
-
-
-def collisions(count, keylist, n):
-    colls = {}
-    for keyset in keylist.split():  # space-separated
-        for combo in itertools.permutations(keyset, n):
-            combo = ''.join(combo)  # should be string, not tuple
-            x = count.get(combo, 0)
-            if x: colls[combo] = x
-    return colls
-
-
 class Layout:
     def __init__(self, keylist):
         self.keys = [
@@ -77,6 +49,15 @@ class Layout:
             print(key.value, end=' ')
         print()
 
+    def fingers(self):
+        groups = {}
+        for key in self.keys:
+            try:
+                groups[key.finger].append(key)
+            except KeyError:
+                groups[key.finger] = [key]
+        return groups
+
 
 class Key:
     def __init__(self, position, value, finger, ease):
@@ -85,11 +66,52 @@ class Key:
         self.finger = finger
         self.ease = ease
 
+    def __repr__(self):
+        return self.value
+
 
 def load_layout(path):
     with open(path, 'r') as f:
         keylist = f.read().split()
     return Layout(keylist)
+
+
+def ngraphs(path, n):
+    count = {}
+    if path:
+        f = open(path, 'r')
+    else:
+        f = sys.stdin
+    while True:
+        di = f.read(n)
+        if not di: break
+        if ' ' in di or '\n' in di: continue
+        try:
+            count[di.lower()] += 1
+        except KeyError:
+            count[di.lower()] = 1
+    f.close()
+    return count
+
+
+def collisions(count, keylist, n):
+    colls = {}
+    for keyset in keylist.split():  # space-separated
+        for combo in itertools.permutations(keyset, n):
+            combo = ''.join(combo)  # should be string, not tuple
+            x = count.get(combo, 0)
+            if x: colls[combo] = x
+    return colls
+
+
+def layout_collisions(layout, keycounts, n):
+    colls = {}
+    for keys in layout.fingers().values():
+        for combo in itertools.permutations((k.value for k in keys), n):
+            combo = ''.join(combo)  # should be string, not tuple
+            x = keycounts.get(combo, 0)
+            if x: colls[combo] = x
+    return colls
 
 
 def display(*counts):
@@ -99,11 +121,12 @@ def display(*counts):
 
 
 def main(args):
-    if args.test:
-        layout = load_layout('qwerty')
-        layout.print()
-        return
     count = ngraphs(args.file, args.ngram)
+    if args.test:
+        layout = load_layout('/home/john/projects/keys/qwerty')
+        colls = layout_collisions(layout, count, args.ngram)
+        display(colls)
+        return
     if args.collisions:
         colls = collisions(count, args.collisions, args.ngram)
         display(colls)
@@ -113,6 +136,7 @@ def main(args):
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
+    # TODO: set default file to be sys.stdin instead of None check in ngrams()
     parser.add_argument("file", nargs="?")
     parser.add_argument("-n", "--ngram", type=int, default=1)
     parser.add_argument("-c", "--collisions")
