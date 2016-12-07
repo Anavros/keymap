@@ -3,10 +3,13 @@ import sys
 import itertools
 import argparse
 from operator import itemgetter
+from contextlib import contextmanager
 
 
 class Layout:
     def __init__(self, keylist):
+        # TODO: put other data in files with same format
+        # make list by zipping every file up together
         self.keys = [
             Key("A01", keylist[ 0], "LP", 2),  # q
             Key("A02", keylist[ 1], "LR", 2),  # w
@@ -59,6 +62,10 @@ class Layout:
     def difficulties(self):
         return self._group(lambda k: k.ease)
 
+    # TODO: use dict not list for self.keys
+    def values(self):
+        return {k.value:k for k in self.keys}
+
 
 class Key:
     def __init__(self, position, value, finger, ease):
@@ -77,37 +84,62 @@ def load_layout(path):
     return Layout(keylist)
 
 
-def ngraphs(path, n):
-    count = {}
+@contextmanager
+def read_file_or_stdin(path):
     if path:
         f = open(path, 'r')
+        yield f
+        f.close()
     else:
-        f = sys.stdin
-    while True:
-        seq = f.read(n)
-        if not seq:  # EOF
-            break
-        if ' ' in seq or '\n' in seq:  # not counting whitespace
-            continue
-        seq.replace(';', ':')
-        seq.replace('\'', '\"')
-        char = seq.lower()
-        try:
-            count[char] += 1
-        except KeyError:
-            count[char] = 1
-    f.close()
+        yield sys.stdin
+
+
+def ngraphs(path, n, alpha):
+    count = {}
+    with read_file_or_stdin(path) as f:
+        while True:
+            seq = f.read(n)
+            if not seq:  # EOF
+                break
+            if ' ' in seq or '\n' in seq:  # not counting whitespace
+                continue
+            if alpha and not seq.isalpha():
+                continue
+            seq.replace(';', ':')
+            seq.replace('\'', '\"')
+            char = seq.lower()
+            try:
+                count[char] += 1
+            except KeyError:
+                try:
+                    count[char[::-1]] += 1
+                except KeyError:
+                    count[char] = 1
     return count
 
 
-def collisions(count, keylist, n):
-    colls = {}
-    for keyset in keylist.split():  # space-separated
-        for combo in itertools.permutations(keyset, n):
-            combo = ''.join(combo)  # should be string, not tuple
-            x = count.get(combo, 0)
-            if x: colls[combo] = x
-    return colls
+def hands(path, layout):
+    keys = layout.values()
+    string = ''
+    strings = {}
+    on_hand = 'L'
+    with read_file_or_stdin(path) as f:
+        while True:
+            c = f.read(1)
+            if not c: break
+            try:
+                hand = keys[c].finger[0]
+            except KeyError:
+                strings[string] = len(string)
+                string = ''
+                continue
+            if hand == on_hand:
+                string += c
+            else:
+                on_hand = hand
+                strings[string] = len(string)
+                string = ''
+    return strings
 
 
 def layout_collisions(layout, keycounts, n):
@@ -145,15 +177,18 @@ def display(count, args):
 
 def main(args):
     if args.task == 'count':
-        display(ngraphs(args.file, args.ngram), args)
+        display(ngraphs(args.file, args.ngram, args.alpha), args)
     elif args.task == 'collisions':
         layout = load_layout('/home/john/projects/keys/layouts/'+args.layout)
-        keycounts = ngraphs(args.file, 2)
+        keycounts = ngraphs(args.file, 2, args.alpha)
         display(layout_collisions(layout, keycounts, 2), args)
     elif args.task == 'cost':
         layout = load_layout('/home/john/projects/keys/layouts/'+args.layout)
-        keycounts = ngraphs(args.file, 1)
+        keycounts = ngraphs(args.file, 1, args.alpha)
         display(ease(layout, keycounts), args)
+    elif args.task == 'hands':
+        layout = load_layout('/home/john/projects/keys/layouts/'+args.layout)
+        display(hands(args.file, layout), args)
 
 
 if __name__ == '__main__':
@@ -164,4 +199,5 @@ if __name__ == '__main__':
     parser.add_argument("-l", "--layout", default='qwerty')
     parser.add_argument("-c", "--collisions")
     parser.add_argument("-m", "--minimum", type=int, default=0)
+    parser.add_argument("-a", "--alpha", action='store_true')
     main(parser.parse_args())
