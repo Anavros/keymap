@@ -18,29 +18,24 @@ class Layout:
             Key("A08", keylist[ 7], "RM", 2),  # i
             Key("A09", keylist[ 8], "RR", 2),  # o
             Key("A10", keylist[ 9], "RP", 2),  # p
-            Key("A11", keylist[10], "RP", 3),  # [
-            Key("A12", keylist[11], "RP", 3),  # ]
-            Key("B01", keylist[12], "LP", 1),  # a
-            Key("B02", keylist[13], "LR", 1),  # s
-            Key("B03", keylist[14], "LM", 1),  # d
-            Key("B04", keylist[15], "LI", 1),  # f
-            Key("B05", keylist[16], "LI", 3),  # g
-            Key("B06", keylist[17], "RI", 3),  # h
-            Key("B07", keylist[18], "RI", 1),  # j
-            Key("B08", keylist[19], "RM", 1),  # k
-            Key("B09", keylist[20], "RR", 1),  # l
-            Key("B10", keylist[21], "RP", 1),  # ;
-            Key("B11", keylist[22], "RP", 4),  # '
-            Key("C01", keylist[23], "LR", 5),  # z
-            Key("C02", keylist[24], "LM", 5),  # x
-            Key("C03", keylist[25], "LI", 3),  # c
-            Key("C04", keylist[26], "LI", 4),  # v
-            Key("C05", keylist[27], "RI", 5),  # b
-            Key("C06", keylist[28], "RI", 4),  # n
-            Key("C07", keylist[29], "RI", 3),  # m
-            Key("C08", keylist[30], "RM", 4),  # ,
-            Key("C09", keylist[31], "RR", 4),  # .
-            Key("C10", keylist[32], "RP", 4),  # /
+            Key("B01", keylist[10], "LP", 1),  # a
+            Key("B02", keylist[11], "LR", 1),  # s
+            Key("B03", keylist[12], "LM", 1),  # d
+            Key("B04", keylist[13], "LI", 1),  # f
+            Key("B05", keylist[14], "LI", 3),  # g
+            Key("B06", keylist[15], "RI", 3),  # h
+            Key("B07", keylist[16], "RI", 1),  # j
+            Key("B08", keylist[17], "RM", 1),  # k
+            Key("B09", keylist[18], "RR", 1),  # l
+            Key("B10", keylist[19], "RP", 1),  # :
+            Key("B11", keylist[20], "RP", 4),  # "
+            Key("C01", keylist[21], "LR", 5),  # z
+            Key("C02", keylist[22], "LM", 5),  # x
+            Key("C03", keylist[23], "LI", 3),  # c
+            Key("C04", keylist[24], "LI", 4),  # v
+            Key("C05", keylist[25], "RI", 5),  # b
+            Key("C06", keylist[26], "RI", 4),  # n
+            Key("C07", keylist[27], "RI", 3),  # m
         ]
 
     def print(self):
@@ -89,13 +84,18 @@ def ngraphs(path, n):
     else:
         f = sys.stdin
     while True:
-        di = f.read(n)
-        if not di: break
-        if ' ' in di or '\n' in di: continue
+        seq = f.read(n)
+        if not seq:  # EOF
+            break
+        if ' ' in seq or '\n' in seq:  # not counting whitespace
+            continue
+        seq.replace(';', ':')
+        seq.replace('\'', '\"')
+        char = seq.lower()
         try:
-            count[di.lower()] += 1
+            count[char] += 1
         except KeyError:
-            count[di.lower()] = 1
+            count[char] = 1
     f.close()
     return count
 
@@ -132,23 +132,28 @@ def ease(layout, keycounts):
     return cost
 
 
-def display(*counts):
-    for count in counts:
-        for c, n in sorted(count.items(), key=itemgetter(1)):
+def display(count, args):
+    total = 0
+    for c, n in sorted(count.items(), key=itemgetter(1)):
+        total += n
+        if args.minimum and n < args.minimum:
+            pass
+        else:
             print("'{}' {}".format(c, n))
+    print("Total:", total)
 
 
 def main(args):
     if args.task == 'count':
-        display(ngraphs(args.file, args.ngram))
+        display(ngraphs(args.file, args.ngram), args)
     elif args.task == 'collisions':
         layout = load_layout('/home/john/projects/keys/layouts/'+args.layout)
         keycounts = ngraphs(args.file, 2)
-        display(layout_collisions(layout, keycounts, 2))
-    elif args.task == 'ease':
+        display(layout_collisions(layout, keycounts, 2), args)
+    elif args.task == 'cost':
         layout = load_layout('/home/john/projects/keys/layouts/'+args.layout)
         keycounts = ngraphs(args.file, 1)
-        display(ease(layout, keycounts))
+        display(ease(layout, keycounts), args)
 
 
 if __name__ == '__main__':
@@ -158,4 +163,5 @@ if __name__ == '__main__':
     parser.add_argument("-n", "--ngram", type=int, default=1)
     parser.add_argument("-l", "--layout", default='qwerty')
     parser.add_argument("-c", "--collisions")
+    parser.add_argument("-m", "--minimum", type=int, default=0)
     main(parser.parse_args())
