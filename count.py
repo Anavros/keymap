@@ -131,9 +131,24 @@ def layout_collisions(layout, keycounts, n):
     for keys in layout.fingers().values():
         for combo in itertools.permutations((k.value for k in keys), n):
             combo = ''.join(combo)  # should be string, not tuple
+            if ':' in combo or '"' in combo: continue
             x = keycounts.get(combo, 0)
-            if x: colls[combo] = x
+            if x:
+                colls[combo] = x
     return colls
+
+
+def reactions(key, pairs):
+    result = {}
+    for chars, occurance in pairs.items():
+        if key in chars:
+            other = chars.replace(key, '')
+            if not other: continue  # if pair is e.g. 'ee' and both are removed
+            try:
+                result[other] += occurance
+            except KeyError:
+                result[other] = occurance
+    return result
 
 
 def ease(layout, keycounts):
@@ -173,6 +188,9 @@ def main(args):
     elif args.task == 'hands':
         layout = load_layout('/home/john/projects/keys/layouts/'+args.layout)
         display(hands(args.file, layout), args)
+    elif args.task == 'reactions':
+        keycounts = ngraphs(args.file, 2, True)
+        display(reactions(args.char, keycounts), args)
 
 
 if __name__ == '__main__':
@@ -181,7 +199,7 @@ if __name__ == '__main__':
     parser.add_argument("file", nargs="?")
     parser.add_argument("-n", "--ngram", type=int, default=1)
     parser.add_argument("-l", "--layout", default='qwerty')
-    parser.add_argument("-c", "--collisions")
+    parser.add_argument("-c", "--char", default='e')
     parser.add_argument("-m", "--minimum", type=int, default=0)
     parser.add_argument("-a", "--alpha", action='store_true')
     main(parser.parse_args())
