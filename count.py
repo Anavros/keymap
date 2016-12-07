@@ -1,52 +1,25 @@
 
-from sys import argv
-from operator import itemgetter
+import sys
 import itertools
 import argparse
-
-# TODO: use stdin as input
-# so you can cat 1 2 3 | kc
-# TODO: format in columns
-
-def digraphs(path):
-    count = {}
-    with open(path, 'r') as f:
-        while True:
-            di = f.read(2)
-            if not di: break
-            if ' ' in di or '\n' in di: continue
-            try:
-                count[di.lower()] += 1
-            except KeyError:
-                count[di.lower()] = 1
-    return count
+from operator import itemgetter
 
 
 def ngraphs(path, n):
     count = {}
-    with open(path, 'r') as f:
-        while True:
-            di = f.read(n)
-            if not di: break
-            if ' ' in di or '\n' in di: continue
-            try:
-                count[di.lower()] += 1
-            except KeyError:
-                count[di.lower()] = 1
-    return count
-
-
-def chars(path):
-    count = {}
-    with open(path, 'r') as f:
-        while True:
-            c = f.read(1)
-            if not c: break
-            if c in [' ', '\n']: continue
-            try:
-                count[c.lower()] += 1
-            except KeyError:
-                count[c.lower()] = 1
+    if path:
+        f = open(path, 'r')
+    else:
+        f = sys.stdin
+    while True:
+        di = f.read(n)
+        if not di: break
+        if ' ' in di or '\n' in di: continue
+        try:
+            count[di.lower()] += 1
+        except KeyError:
+            count[di.lower()] = 1
+    f.close()
     return count
 
 
@@ -76,7 +49,7 @@ def main(args):
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
-    parser.add_argument("file", default=None)
+    parser.add_argument("file", nargs="?")
     parser.add_argument("-n", "--ngram", type=int, default=1)
     parser.add_argument("-c", "--collisions")
     main(parser.parse_args())
