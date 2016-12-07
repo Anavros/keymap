@@ -7,49 +7,19 @@ from contextlib import contextmanager
 
 
 class Layout:
-    def __init__(self, keylist):
-        # TODO: put other data in files with same format
-        # make list by zipping every file up together
-        self.keys = [
-            Key("A01", keylist[ 0], "LP", 2),  # q
-            Key("A02", keylist[ 1], "LR", 2),  # w
-            Key("A03", keylist[ 2], "LM", 2),  # e
-            Key("A04", keylist[ 3], "LI", 3),  # r
-            Key("A05", keylist[ 4], "LI", 4),  # t
-            Key("A06", keylist[ 5], "RI", 4),  # y
-            Key("A07", keylist[ 6], "RI", 3),  # u
-            Key("A08", keylist[ 7], "RM", 2),  # i
-            Key("A09", keylist[ 8], "RR", 2),  # o
-            Key("A10", keylist[ 9], "RP", 2),  # p
-            Key("B01", keylist[10], "LP", 1),  # a
-            Key("B02", keylist[11], "LR", 1),  # s
-            Key("B03", keylist[12], "LM", 1),  # d
-            Key("B04", keylist[13], "LI", 1),  # f
-            Key("B05", keylist[14], "LI", 3),  # g
-            Key("B06", keylist[15], "RI", 3),  # h
-            Key("B07", keylist[16], "RI", 1),  # j
-            Key("B08", keylist[17], "RM", 1),  # k
-            Key("B09", keylist[18], "RR", 1),  # l
-            Key("B10", keylist[19], "RP", 1),  # :
-            Key("B11", keylist[20], "RP", 4),  # "
-            Key("C01", keylist[21], "LR", 5),  # z
-            Key("C02", keylist[22], "LM", 5),  # x
-            Key("C03", keylist[23], "LI", 3),  # c
-            Key("C04", keylist[24], "LI", 4),  # v
-            Key("C05", keylist[25], "RI", 5),  # b
-            Key("C06", keylist[26], "RI", 4),  # n
-            Key("C07", keylist[27], "RI", 3),  # m
-        ]
+    def __init__(self, positions, keys, fingers, costs):
+        self.keys = { k:Key(p,k,f,int(c)) for p,k,f,c in
+            zip(positions, keys, fingers, costs) }
 
     def print(self):
-        for key in self.keys:
+        for key in self.keys.values():
             if key.position in ["B01", "C01"]: print()
             print(key.value, end=' ')
         print()
 
     def _group(self, keyfunc):
         groups = {}
-        for key in self.keys:
+        for key in self.keys.values():
             try:
                 groups[keyfunc(key)].append(key)
             except KeyError:
@@ -61,10 +31,6 @@ class Layout:
 
     def difficulties(self):
         return self._group(lambda k: k.ease)
-
-    # TODO: use dict not list for self.keys
-    def values(self):
-        return {k.value:k for k in self.keys}
 
 
 class Key:
@@ -78,10 +44,21 @@ class Key:
         return self.value
 
 
-def load_layout(path):
-    with open(path, 'r') as f:
+def load_layout(
+        keypath,
+        costpath='/home/john/projects/keys/cost',
+        fingerpath='/home/john/projects/keys/finger',
+        positionpath='/home/john/projects/keys/position',
+    ):
+    with open(positionpath, 'r') as f:
+        positionlist = f.read().split()
+    with open(keypath, 'r') as f:
         keylist = f.read().split()
-    return Layout(keylist)
+    with open(fingerpath, 'r') as f:
+        fingerlist = f.read().split()
+    with open(costpath, 'r') as f:
+        costlist = f.read().split()
+    return Layout(positionlist, keylist, fingerlist, costlist)
 
 
 @contextmanager
@@ -119,10 +96,19 @@ def ngraphs(path, n, alpha):
 
 
 def hands(path, layout):
-    keys = layout.values()
+    keys = layout.keys
     string = ''
     strings = {}
     on_hand = 'L'
+    def add():
+        nonlocal string, strings
+        if len(string) < 3: return
+        try:
+            strings[string] += 1
+        except KeyError:
+            strings[string] = 1
+        string = ''
+
     with read_file_or_stdin(path) as f:
         while True:
             c = f.read(1)
@@ -130,15 +116,13 @@ def hands(path, layout):
             try:
                 hand = keys[c].finger[0]
             except KeyError:
-                strings[string] = len(string)
-                string = ''
+                add()
                 continue
             if hand == on_hand:
                 string += c
             else:
                 on_hand = hand
-                strings[string] = len(string)
-                string = ''
+                add()
     return strings
 
 
