@@ -17,16 +17,16 @@ xkb_symbols "ox" {
     key <AE11> {[ backslash, bar ]};
     key <AE12> {[ equal, grave ]};
 
-    key <AD01> {[ colon, semicolon ]};
+    key <AD01> {[ apostrophe, quotedbl ]};
     key <AD02> {[ u, U ]};
     key <AD03> {[ l, L ]};
     key <AD04> {[ p, P ]};
     key <AD05> {[ w, W ]};
-    key <AD06> {[ X, X ]};
+    key <AD06> {[ y, Y ]};
     key <AD07> {[ f, F ]};
     key <AD08> {[ r, R ]};
     key <AD09> {[ o, O ]};
-    key <AD10> {[ apostrophe, quotedbl ]};
+    key <AD10> {[ colon, semicolon ]};
     key <AD11> {[ minus, underscore ]};
     key <AD12> {[ plus, asterisk ]};
     key <BKSL> {[ numbersign, ampersand ]};
@@ -41,10 +41,10 @@ xkb_symbols "ox" {
     key <AC08> {[ h, H ]};
     key <AC09> {[ e, E ]};
     key <AC10> {[ s, S ]};
-    key <AC11> {[ y, Y ]};
+    key <AC11> {[ z, Z ]};
 
     key <AB01> {[ j, J ]};
-    key <AB02> {[ z, Z ]};
+    key <AB02> {[ x, X ]};
     key <AB03> {[ c, C ]};
     key <AB04> {[ v, V ]};
     key <AB05> {[ q, Q ]};

@@ -5,6 +5,7 @@ import argparse
 from operator import itemgetter
 from contextlib import contextmanager
 from layout import load as load_layout
+from string import ascii_lowercase
 
 
 @contextmanager
@@ -149,31 +150,56 @@ def display(count, args):
     print("Total:", total)
 
 
+def complete(keycounts):
+    """
+    Take a {key: count} dictionary and fill in each key not already included
+    with a default value of 0. Used for showing the absence of keys in a count.
+    Creates a new dictionary to return.
+    """
+    new = {}
+    for alpha in ascii_lowercase:
+        try:
+            count = keycounts[alpha]
+        except KeyError:
+            new[alpha] = 0
+        else:
+            new[alpha] = count
+    return new
+
+
 # TODO: docstrings for everything
 # TODO: move tasks into separate functions and use dispatch dict
 def main(args):
     if args.task == 'count':
         display(ngraphs(args.file, args.ngram, args.alpha), args)
+
     elif args.task == 'collisions':
         layout = load_layout('/home/john/projects/keys/layouts/'+args.layout)
         keycounts = ngraphs(args.file, 2, args.alpha)
         display(layout_collisions(layout, keycounts, 2), args)
+
     elif args.task == 'cost':
         layout = load_layout('/home/john/projects/keys/layouts/'+args.layout)
         keycounts = ngraphs(args.file, 1, args.alpha)
         display(ease(layout, keycounts), args)
+
     elif args.task == 'hands':
         layout = load_layout('/home/john/projects/keys/layouts/'+args.layout)
         display(hands(args.file, layout), args)
+
     elif args.task == 'reactions':
         keycounts = ngraphs(args.file, 2, True)
-        display(reactions(args.char, keycounts), args)
+        actions = reactions(args.char, keycounts)
+        actions = complete(actions)
+        display(actions, args)
+
     elif args.task == 'fingers':
         layout = load_layout('/home/john/projects/keys/layouts/'+args.layout)
         keycounts = ngraphs(args.file, 1, False)
         for f, keys in sorted(fingers(keycounts, layout).items()):
             print(f)
             display(keys, args)
+
     elif args.task == 'balance':
         layout = load_layout('/home/john/projects/keys/layouts/'+args.layout)
         keycounts = ngraphs(args.file, 1, True)
