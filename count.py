@@ -166,7 +166,7 @@ def main(args):
     elif args.task == 'collisions':
         keycounts = ngraphs(args.file, 2, args.alpha)
         if len(args.char) > 1:  # little hacky, default is 'e' so no bool check
-            collisions = collide.subset(keycounts, args.char)
+            collisions = collide.subset(args.char, keycounts)
         else:
             keymap = layout.load('/home/john/projects/keys/layouts/'+args.layout)
             collisions = collide.layout(keymap, keycounts)

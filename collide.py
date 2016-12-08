@@ -11,7 +11,7 @@ import itertools
 
 # Is this going to have a problem with reverse duplicates?
 # e.g. 'ab' separate from 'ba'
-def subset(keycounts, chars):
+def subset(chars, keycounts):
     """
     Check collisions between a small subset of characters.
     """
@@ -27,19 +27,24 @@ def subset(keycounts, chars):
     return collisions
 
 
-# TODO: Clean up, swap arguments.
-def layout(keymap, counts):
+def layout(keymap, keycounts):
     """
     Check collisions over an entire keyboard layout.
     """
-    colls = {}
-    for keys in keymap.fingers().values():
+    collisions = {}
+    keys_by_finger = keymap.fingers()
+    for finger, keylist in keys_by_finger.items():
+        keyvalues = [k.value for k in keylist]
         # Only checks two-wide combinations; may change in future.
-        for combo in itertools.permutations((k.value for k in keys), 2):
-            combo = ''.join(combo)  # should be string, not tuple
-            if ':' in combo or '"' in combo: continue
-            x = counts.get(combo, 0)
-            if x:
-                colls[combo] = x
-    return colls
+        for pair in itertools.permutations(keyvalues, 2):
+            pair = ''.join(pair)  # from tuple to string
+            if not pair.isalpha():
+                continue
+            try:
+                occurance = keycounts[pair]
+            except KeyError:
+                continue
+            else:
+                collisions[pair] = occurance
+    return collisions
 
