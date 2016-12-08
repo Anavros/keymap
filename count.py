@@ -2,12 +2,12 @@
 import sys
 import itertools
 import argparse
-from operator import itemgetter
 from contextlib import contextmanager
 from string import ascii_lowercase
 
 import layout
 import collide
+import display
 
 
 @contextmanager
@@ -129,17 +129,6 @@ def ease(layout, keycounts):
     return cost
 
 
-def display(count, args):
-    total = 0
-    for c, n in sorted(count.items(), key=itemgetter(1)):
-        total += n
-        if args.minimum and n < args.minimum:
-            pass
-        else:
-            print("'{}' {}".format(c, n))
-    print("Total:", total)
-
-
 def complete(keycounts):
     """
     Take a {key: count} dictionary and fill in each key not already included
@@ -161,7 +150,8 @@ def complete(keycounts):
 # TODO: move tasks into separate functions and use dispatch dict
 def main(args):
     if args.task == 'count':
-        display(ngraphs(args.file, args.ngram, args.alpha), args)
+        keycounts = ngraphs(args.file, args.ngram, args.alpha)
+        display.columns(keycounts, args.minimum, label="Key Counts:")
 
     elif args.task == 'collisions':
         keycounts = ngraphs(args.file, 2, args.alpha)
@@ -170,38 +160,38 @@ def main(args):
         else:
             keymap = layout.load('/home/john/projects/keys/layouts/'+args.layout)
             collisions = collide.layout(keymap, keycounts)
-        display(collisions, args)
+        display.columns(collisions, args.minimum)
 
     elif args.task == 'cost':
         keymap = layout.load('/home/john/projects/keys/layouts/'+args.layout)
         keycounts = ngraphs(args.file, 1, args.alpha)
-        display(ease(keymap, keycounts), args)
+        costs = ease(keymap, keycounts)
+        display.columns(costs, args.minimum)
 
     elif args.task == 'hands':
         keymap = layout.load('/home/john/projects/keys/layouts/'+args.layout)
-        display(hands(args.file, keymap), args)
+        balance = hands(args.file, keymap)
+        display.columns(balance, args.minimum)
 
     elif args.task == 'reactions':
         keycounts = ngraphs(args.file, 2, True)
         actions = reactions(args.char, keycounts)
         actions = complete(actions)
-        display(actions, args)
+        display.columns(actions, args.minimum)
 
     elif args.task == 'fingers':
         keymap = layout.load('/home/john/projects/keys/layouts/'+args.layout)
         keycounts = ngraphs(args.file, 1, False)
         for f, keys in sorted(fingers(keycounts, keymap).items()):
             print(f)
-            display(keys, args)
+            display(keys, args.minimum)
 
     elif args.task == 'balance':
         keymap = layout.load('/home/john/projects/keys/layouts/'+args.layout)
         keycounts = ngraphs(args.file, 1, True)
         l, r = balance(keycounts, keymap)
-        print("Left:")
-        display(l, args)
-        print("Right:")
-        display(r, args)
+        display(l, args.minimum, label="Left:")
+        display(r, args.minimum, label="Right:")
 
 
 if __name__ == '__main__':
