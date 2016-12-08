@@ -24,7 +24,7 @@ xkb_symbols "ox" {
     key <AD05> {[ w, W ]};
     key <AD06> {[ X, X ]};
     key <AD07> {[ f, F ]};
-    key <AD08> {[ h, H ]};
+    key <AD08> {[ r, R ]};
     key <AD09> {[ o, O ]};
     key <AD10> {[ apostrophe, quotedbl ]};
     key <AD11> {[ minus, underscore ]};
@@ -38,7 +38,7 @@ xkb_symbols "ox" {
     key <AC05> {[ b, B ]};
     key <AC06> {[ g, G ]};
     key <AC07> {[ t, T ]};
-    key <AC08> {[ r, R ]};
+    key <AC08> {[ h, H ]};
     key <AC09> {[ e, E ]};
     key <AC10> {[ s, S ]};
     key <AC11> {[ y, Y ]};

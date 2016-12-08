@@ -4,7 +4,7 @@ import itertools
 import argparse
 from operator import itemgetter
 from contextlib import contextmanager
-from layout import Layout
+from layout import load as load_layout
 
 
 @contextmanager
@@ -72,6 +72,35 @@ def hands(path, layout):
     return strings
 
 
+# {'a': 100}, {'o': 100}
+def balance(charcounts, layout):
+    lkeys = {}
+    rkeys = {}
+    for c, n in charcounts.items():
+        hand = layout.keys[c].finger[0]  # finger might be e.g. RI
+        if hand == 'R':
+            rkeys[c] = n
+        elif hand == 'L':
+            lkeys[c] = n
+    return lkeys, rkeys
+
+
+def fingers(charcounts, layout):
+    # Iterate over finger->keylist mapping and change each keylist into a dict.
+    fingers = {}
+    for f, keys in layout.fingers().items():
+        keydict = {}
+        for k in keys:
+            k = k.value
+            try:
+                count = charcounts[k]
+            except KeyError:
+                break
+            keydict[k] = count
+        fingers[f] = keydict
+    return fingers
+
+
 def layout_collisions(layout, keycounts, n):
     colls = {}
     for keys in layout.fingers().values():
@@ -120,6 +149,8 @@ def display(count, args):
     print("Total:", total)
 
 
+# TODO: docstrings for everything
+# TODO: move tasks into separate functions and use dispatch dict
 def main(args):
     if args.task == 'count':
         display(ngraphs(args.file, args.ngram, args.alpha), args)
@@ -137,6 +168,20 @@ def main(args):
     elif args.task == 'reactions':
         keycounts = ngraphs(args.file, 2, True)
         display(reactions(args.char, keycounts), args)
+    elif args.task == 'fingers':
+        layout = load_layout('/home/john/projects/keys/layouts/'+args.layout)
+        keycounts = ngraphs(args.file, 1, False)
+        for f, keys in sorted(fingers(keycounts, layout).items()):
+            print(f)
+            display(keys, args)
+    elif args.task == 'balance':
+        layout = load_layout('/home/john/projects/keys/layouts/'+args.layout)
+        keycounts = ngraphs(args.file, 1, True)
+        l, r = balance(keycounts, layout)
+        print("Left:")
+        display(l, args)
+        print("Right:")
+        display(r, args)
 
 
 if __name__ == '__main__':
