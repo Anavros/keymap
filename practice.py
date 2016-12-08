@@ -5,27 +5,41 @@ import readline
 import random
 from layout import load
 
+word_cache = []
 
-def generate(allowed):
-    tasks = []
-    for i in range(random.randint(2, 7)):
-        random.shuffle(allowed)
-        string = ''.join(allowed[:random.randint(1, len(allowed))])
-        tasks.append(string)
-    return ' '.join(tasks)
+
+def gibberish(allowed):
+    random.shuffle(allowed)
+    return ''.join(allowed[:random.randint(1, len(allowed))])
+
+
+def dictionary():
+    global word_cache
+    return random.choice(word_cache)
 
 
 def loop(layout, allowed):
     while True:
         print('\n'*50)
+        print("Cache Length:", len(word_cache))
         layout.print()
         print()
-        task = generate(allowed)
-        print(task)
+        string = dictionary()
+        print(string, string, string)
         response = input()
 
 
+def load_word_cache(legal):
+    global word_cache
+    with open("/usr/share/dict/words", 'r') as f:
+        for line in f:
+            word = line.strip()
+            if set(word.lower()) <= legal:
+                word_cache.append(word)
+
+
 def main(args):
+    load_word_cache(set(args.allowed))
     layout = load('/home/john/projects/keys/layouts/'+args.layout)
     try:
         loop(layout, list(args.allowed))
