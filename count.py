@@ -4,8 +4,10 @@ import itertools
 import argparse
 from operator import itemgetter
 from contextlib import contextmanager
-from layout import load as load_layout
 from string import ascii_lowercase
+
+import layout
+import collide
 
 
 @contextmanager
@@ -102,18 +104,6 @@ def fingers(charcounts, layout):
     return fingers
 
 
-def layout_collisions(layout, keycounts, n):
-    colls = {}
-    for keys in layout.fingers().values():
-        for combo in itertools.permutations((k.value for k in keys), n):
-            combo = ''.join(combo)  # should be string, not tuple
-            if ':' in combo or '"' in combo: continue
-            x = keycounts.get(combo, 0)
-            if x:
-                colls[combo] = x
-    return colls
-
-
 def reactions(key, pairs):
     result = {}
     for chars, occurance in pairs.items():
@@ -174,18 +164,22 @@ def main(args):
         display(ngraphs(args.file, args.ngram, args.alpha), args)
 
     elif args.task == 'collisions':
-        layout = load_layout('/home/john/projects/keys/layouts/'+args.layout)
         keycounts = ngraphs(args.file, 2, args.alpha)
-        display(layout_collisions(layout, keycounts, 2), args)
+        if len(args.char) > 1:  # little hacky, default is 'e' so no bool check
+            collisions = collide.subset(keycounts, args.char)
+        else:
+            keymap = layout.load('/home/john/projects/keys/layouts/'+args.layout)
+            collisions = collide.layout(keymap, keycounts)
+        display(collisions, args)
 
     elif args.task == 'cost':
-        layout = load_layout('/home/john/projects/keys/layouts/'+args.layout)
+        keymap = layout.load('/home/john/projects/keys/layouts/'+args.layout)
         keycounts = ngraphs(args.file, 1, args.alpha)
-        display(ease(layout, keycounts), args)
+        display(ease(keymap, keycounts), args)
 
     elif args.task == 'hands':
-        layout = load_layout('/home/john/projects/keys/layouts/'+args.layout)
-        display(hands(args.file, layout), args)
+        keymap = layout.load('/home/john/projects/keys/layouts/'+args.layout)
+        display(hands(args.file, keymap), args)
 
     elif args.task == 'reactions':
         keycounts = ngraphs(args.file, 2, True)
@@ -194,16 +188,16 @@ def main(args):
         display(actions, args)
 
     elif args.task == 'fingers':
-        layout = load_layout('/home/john/projects/keys/layouts/'+args.layout)
+        keymap = layout.load('/home/john/projects/keys/layouts/'+args.layout)
         keycounts = ngraphs(args.file, 1, False)
-        for f, keys in sorted(fingers(keycounts, layout).items()):
+        for f, keys in sorted(fingers(keycounts, keymap).items()):
             print(f)
             display(keys, args)
 
     elif args.task == 'balance':
-        layout = load_layout('/home/john/projects/keys/layouts/'+args.layout)
+        keymap = layout.load('/home/john/projects/keys/layouts/'+args.layout)
         keycounts = ngraphs(args.file, 1, True)
-        l, r = balance(keycounts, layout)
+        l, r = balance(keycounts, keymap)
         print("Left:")
         display(l, args)
         print("Right:")
