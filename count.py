@@ -4,24 +4,7 @@ import itertools
 import argparse
 from operator import itemgetter
 from contextlib import contextmanager
-from objects import Layout
-
-
-def load_layout(
-        keypath,
-        costpath='/home/john/projects/keys/cost',
-        fingerpath='/home/john/projects/keys/finger',
-        positionpath='/home/john/projects/keys/position',
-    ):
-    with open(positionpath, 'r') as f:
-        positionlist = f.read().split()
-    with open(keypath, 'r') as f:
-        keylist = f.read().split()
-    with open(fingerpath, 'r') as f:
-        fingerlist = f.read().split()
-    with open(costpath, 'r') as f:
-        costlist = f.read().split()
-    return Layout(positionlist, keylist, fingerlist, costlist)
+from layout import Layout
 
 
 @contextmanager

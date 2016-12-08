@@ -6,8 +6,12 @@ class Layout:
             zip(positions, keys, fingers, costs) }
 
     def print(self):
-        for key in self.keys.values():
-            if key.position in ["B01", "C01"]: print()
+        keys = sorted(self.keys.values(), key=lambda key: key.position)
+        for key in keys:
+            if key.position == 'B01':
+                print('\n', end=' ')
+            elif key.position == 'C01':
+                print('\n', end='  ')
             print(key.value, end=' ')
         print()
 
@@ -26,6 +30,9 @@ class Layout:
     def difficulties(self):
         return self._group(lambda k: k.ease)
 
+    def positions(self):
+        return self._group(lambda k: k.position)
+
 
 class Key:
     def __init__(self, position, value, finger, ease):
@@ -36,3 +43,20 @@ class Key:
 
     def __repr__(self):
         return self.value
+
+
+def load(
+        keypath,
+        costpath='/home/john/projects/keys/cost',
+        fingerpath='/home/john/projects/keys/finger',
+        positionpath='/home/john/projects/keys/position',
+    ):
+    with open(positionpath, 'r') as f:
+        positionlist = f.read().split()
+    with open(keypath, 'r') as f:
+        keylist = f.read().split()
+    with open(fingerpath, 'r') as f:
+        fingerlist = f.read().split()
+    with open(costpath, 'r') as f:
+        costlist = f.read().split()
+    return Layout(positionlist, keylist, fingerlist, costlist)
