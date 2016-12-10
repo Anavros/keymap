@@ -170,8 +170,8 @@ def main(args):
 
     elif args.task == 'hands':
         keymap = layout.load('/home/john/projects/keys/layouts/'+args.layout)
-        balance = hands(args.file, keymap)
-        display.columns(balance, args.minimum)
+        h = hands(args.file, keymap)
+        display.columns(h, args.minimum)
 
     elif args.task == 'reactions':
         keycounts = ngraphs(args.file, 2, True)
@@ -184,14 +184,14 @@ def main(args):
         keycounts = ngraphs(args.file, 1, False)
         for f, keys in sorted(fingers(keycounts, keymap).items()):
             print(f)
-            display(keys, args.minimum)
+            display.columns(keys, args.minimum)
 
     elif args.task == 'balance':
         keymap = layout.load('/home/john/projects/keys/layouts/'+args.layout)
         keycounts = ngraphs(args.file, 1, True)
         l, r = balance(keycounts, keymap)
-        display(l, args.minimum, label="Left:")
-        display(r, args.minimum, label="Right:")
+        display.columns(l, args.minimum, label="Left:")
+        display.columns(r, args.minimum, label="Right:")
 
 
 if __name__ == '__main__':
