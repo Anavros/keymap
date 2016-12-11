@@ -4,3 +4,5 @@
 - Graph printing, where counts are represented by bars.
 - General cleanup and modularization.
 - Comparison of other popular layouts using same metrics.
+- Implement caching to speed things up for large data sets.
+- Start adding unit tests.

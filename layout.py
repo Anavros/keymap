@@ -1,4 +1,6 @@
 
+from constants import LAYOUTDIR, COSTDATA, FINGERDATA, POSDATA
+
 
 class Layout:
     def __init__(self, positions, keys, fingers, costs):
@@ -45,18 +47,13 @@ class Key:
         return self.value
 
 
-def load(
-        keypath,
-        costpath='/home/john/projects/keys/cost',
-        fingerpath='/home/john/projects/keys/finger',
-        positionpath='/home/john/projects/keys/position',
-    ):
-    with open(positionpath, 'r') as f:
-        positionlist = f.read().split()
-    with open(keypath, 'r') as f:
+def load(name, costpath=COSTDATA, fingerpath=FINGERDATA, pospath=POSDATA):
+    with open(pospath, 'r') as f:
+        poslist = f.read().split()
+    with open(LAYOUTDIR+name, 'r') as f:
         keylist = f.read().split()
     with open(fingerpath, 'r') as f:
         fingerlist = f.read().split()
     with open(costpath, 'r') as f:
         costlist = f.read().split()
-    return Layout(positionlist, keylist, fingerlist, costlist)
+    return Layout(poslist, keylist, fingerlist, costlist)
