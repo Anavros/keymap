@@ -1,8 +1,5 @@
 *.swp
-digraphs
-chars
-pydata
-txtdata
-moby
-__pycache__
+*.swo
+data/
+*cache*
 brunch

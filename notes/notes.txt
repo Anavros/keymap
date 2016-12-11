@@ -1,0 +1,104 @@
+Good Combinations:
+eo-rh ao iu hu ft nl rh gt !tp !tc !ck ct cr cl cs
+
+e 8000 jqozwuibx
+s 5000 zjvxqbwkfgdmcyrp
+t 5000 jkvztqbgwmdfxyplc
+n 4000 zmjqxbvlhwyfkpcr
+i 4000 jqybxkuzpevwac
+a 4000 jqzxkuofwgiv
+r 4000 jrxzqhbkwlcvyfsdmn
+o 4000 zqxkjevaygb
+l 3000 jxqzvwmkhnrgbycdt
+d 2000 jzqfhdbpwkvxgmcuytsrl
+
+
+General Notes:
+- Pinky fingers are not very strong.
+- Whatever finger gets 'e' is going to be overworked.
+
+Layout Notes:
+'g' is in a weird spot regarding 'ing'
+    - Also not very good for 'ngth'
+curly brackets would mabye be better fit for where the <> are in qwerty
+! comes with = a lot but is really far away
+; is kinda hard to hit to be perfectly honest. not all code is python
+'-' is hard too
+the combination '->' is definitely too hard
+
+Punctuation Combinations:
+!=
+->
+
+^ 1 2 3 4 5 6 7 8 9 0 ? !
+$ % @ [ ] ~ ` { } ( ) - =
+   ; U L M W Z F R O " | + &
+   : u l m w z f r o ' _ * #
+    A I N T G B S H E P Y
+    a i n t g b s h e p y
+     J X D K Q V C < > \
+     j x d k q v c , . /
+
+Alt-Graph Chars:
+∑ 2211 Epsilon
+∏ 220f Pi
+λ 03bb Lambda
+µ 00b5 Mu
+Ω 2126 Ohm
+★ 2605 Star
+☆ 2606 Star
+☀ 2600 Sun
+✓ 2713 Check
+« 00ab Quote
+» 00bb Quote
+¿ 00bf ?
+¡ 00a1 !
+
+Potential:
+❤ 2764 Heart
+¶ 00b6 Paragraph
+° 00b0 Degree
+μ 03bc Mu
+· 00b7 Dot
+÷ 00f7 Division
+∫ 222b Integral
+∂ 2202 ?
+∆ 2206 Delta
+∗ 2217
+∞ 221e Infinity
+× 00d7
+✕ 2715
+✖ 2716
+√ 221a Radix
+α 03b1 Alpha
+β 03b2 Beta
+γ 03b3 Gamma
+δ 03b4 Delta
+ε 03b5 Epsilon
+ζ 03b6
+η 03b7
+θ 03b8 Theta
+ι 03b9
+κ 03ba
+ν 03bd
+ξ 03be
+ο 03bf
+π 03c0 Pi
+ρ 03c1
+ς 03c2
+σ 03c3
+τ 03c4 Tau
+υ 03c5
+φ 03c6
+χ 03c7
+ψ 03c8
+ω 03c9
+← 2190
+↑ 2191
+→ 2192
+↓ 2193
+⇇ 21c7
+⇈ 21c8
+⇉ 21c9
+⇊ 21ca
+𝛌 𝝺 λ

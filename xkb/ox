@@ -3,19 +3,19 @@ xkb_symbols "ox" {
 
     name[Group1]= "English (Ox Layout)";
 
-    key <TLDE> {[ asciicircum, dollar, exclam, exclam ]};
+    key <TLDE> {[ dollar, asciicircum, U2713, exclam ]};
     key <AE01> {[ percent, 1, exclam, exclam ]};
-    key <AE02> {[ at, 6, exclam, exclam ]};
-    key <AE03> {[ bracketleft, 2, exclam, exclam ]};
-    key <AE04> {[ bracketright, 3, exclam, exclam ]};
-    key <AE05> {[ less, 4, U00AB, exclam ]};
-    key <AE06> {[ greater, 5, U00BB, exclam ]};
+    key <AE02> {[ at, 2, exclam, exclam ]};
+    key <AE03> {[ bracketleft, 3, exclam, exclam ]};
+    key <AE04> {[ bracketright, 4, exclam, exclam ]};
+    key <AE05> {[ asciitilde, 5, exclam, exclam ]};
+    key <AE06> {[ grave, 6, exclam, exclam ]};
     key <AE07> {[ braceleft, 7, exclam, exclam ]};
     key <AE08> {[ braceright, 8, exclam, exclam ]};
     key <AE09> {[ parenleft, 9, exclam, exclam ]};
     key <AE10> {[ parenright, 0, exclam, exclam ]};
-    key <AE11> {[ backslash, bar, exclam, exclam ]};
-    key <AE12> {[ equal, grave, exclam, exclam ]};
+    key <AE11> {[ minus, backslash, exclam, exclam ]};
+    key <AE12> {[ equal, exclam, U00A1, exclam ]};
 
     key <AD01> {[ colon, semicolon, exclam, exclam ]};
     key <AD02> {[ u, U, U00B5, exclam ]};
@@ -27,7 +27,7 @@ xkb_symbols "ox" {
     key <AD08> {[ r, R, exclam, exclam ]};
     key <AD09> {[ o, O, exclam, exclam ]};
     key <AD10> {[ apostrophe, quotedbl, exclam, exclam ]};
-    key <AD11> {[ underscore, minus, exclam, exclam ]};
+    key <AD11> {[ underscore, bar, exclam, exclam ]};
     key <AD12> {[ asterisk, plus, U2605, U2606 ]};
     key <BKSL> {[ numbersign, ampersand, U2600, exclam ]};
 
@@ -50,8 +50,8 @@ xkb_symbols "ox" {
     key <AB05> {[ q, Q, exclam, exclam ]};
     key <AB06> {[ v, V, exclam, exclam ]};
     key <AB07> {[ c, C, exclam, exclam ]};
-    key <AB08> {[ comma, asciitilde, U2713, exclam ]};
-    key <AB09> {[ period, exclam, U00A1, exclam ]};
+    key <AB08> {[ comma, less, U00AB, exclam ]};
+    key <AB09> {[ period, greater, U00BB, exclam ]};
     key <AB10> {[ slash, question, U00BF, exclam ]};
 
     include "level3(ralt_switch)"
