@@ -5,11 +5,11 @@ xkb_symbols "ox" {
 
     key <TLDE> {[ asciicircum, dollar, exclam, exclam ]};
     key <AE01> {[ percent, 1, exclam, exclam ]};
-    key <AE02> {[ bracketleft, 2, exclam, exclam ]};
-    key <AE03> {[ bracketright, 3, exclam, exclam ]};
-    key <AE04> {[ less, 4, U00AB, exclam ]};
-    key <AE05> {[ greater, 5, U00BB, exclam ]};
-    key <AE06> {[ at, 6, exclam, exclam ]};
+    key <AE02> {[ at, 6, exclam, exclam ]};
+    key <AE03> {[ bracketleft, 2, exclam, exclam ]};
+    key <AE04> {[ bracketright, 3, exclam, exclam ]};
+    key <AE05> {[ less, 4, U00AB, exclam ]};
+    key <AE06> {[ greater, 5, U00BB, exclam ]};
     key <AE07> {[ braceleft, 7, exclam, exclam ]};
     key <AE08> {[ braceright, 8, exclam, exclam ]};
     key <AE09> {[ parenleft, 9, exclam, exclam ]};

@@ -3,11 +3,12 @@ import sys
 import itertools
 import argparse
 from contextlib import contextmanager
-from string import ascii_lowercase
+from string import ascii_lowercase, punctuation
 
 import layout
 import collide
 import display
+import util
 
 
 @contextmanager
@@ -20,7 +21,7 @@ def read_file_or_stdin(path):
         yield sys.stdin
 
 
-def ngraphs(path, n, alpha):
+def ngraphs(path, n, allowed=set()):
     count = {}
     with read_file_or_stdin(path) as f:
         while True:
@@ -29,7 +30,7 @@ def ngraphs(path, n, alpha):
                 break
             if ' ' in seq or '\n' in seq:  # not counting whitespace
                 continue
-            if alpha and not seq.isalpha():
+            if allowed and not util.contained(seq, allowed):
                 continue
             seq.replace(';', ':')
             seq.replace('\'', '\"')
@@ -150,11 +151,17 @@ def complete(keycounts):
 # TODO: move tasks into separate functions and use dispatch dict
 def main(args):
     if args.task == 'count':
-        keycounts = ngraphs(args.file, args.ngram, args.alpha)
+        if args.punct:
+            allowed = set(punctuation)
+        elif args.alpha:
+            allowed = set(ascii_lowercase)
+        else:
+            allowed = set()
+        keycounts = ngraphs(args.file, args.ngram, allowed)
         display.columns(keycounts, args.minimum, label="Key Counts:")
 
     elif args.task == 'collisions':
-        keycounts = ngraphs(args.file, 2, args.alpha)
+        keycounts = ngraphs(args.file, 2, set(ascii_lowercase))
         if len(args.char) > 1:  # little hacky, default is 'e' so no bool check
             collisions = collide.subset(args.char, keycounts)
         else:
@@ -164,7 +171,7 @@ def main(args):
 
     elif args.task == 'cost':
         keymap = layout.load('/home/john/projects/keys/layouts/'+args.layout)
-        keycounts = ngraphs(args.file, 1, args.alpha)
+        keycounts = ngraphs(args.file, 1)
         costs = ease(keymap, keycounts)
         display.columns(costs, args.minimum)
 
@@ -174,21 +181,21 @@ def main(args):
         display.columns(h, args.minimum)
 
     elif args.task == 'reactions':
-        keycounts = ngraphs(args.file, 2, True)
+        keycounts = ngraphs(args.file, 2, set(ascii_lowercase))
         actions = reactions(args.char, keycounts)
         actions = complete(actions)
         display.columns(actions, args.minimum)
 
     elif args.task == 'fingers':
         keymap = layout.load('/home/john/projects/keys/layouts/'+args.layout)
-        keycounts = ngraphs(args.file, 1, False)
+        keycounts = ngraphs(args.file, 1)
         for f, keys in sorted(fingers(keycounts, keymap).items()):
             print(f)
             display.columns(keys, args.minimum)
 
     elif args.task == 'balance':
         keymap = layout.load('/home/john/projects/keys/layouts/'+args.layout)
-        keycounts = ngraphs(args.file, 1, True)
+        keycounts = ngraphs(args.file, 1, set(ascii_lowercase))
         l, r = balance(keycounts, keymap)
         display.columns(l, args.minimum, label="Left:")
         display.columns(r, args.minimum, label="Right:")
@@ -202,5 +209,6 @@ if __name__ == '__main__':
     parser.add_argument("-l", "--layout", default='qwerty')
     parser.add_argument("-c", "--char", default='e')
     parser.add_argument("-m", "--minimum", type=int, default=0)
-    parser.add_argument("-a", "--alpha", action='store_true')
+    parser.add_argument("--alpha", action='store_true')
+    parser.add_argument("--punct", action='store_true')
     main(parser.parse_args())

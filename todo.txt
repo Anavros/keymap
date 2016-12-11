@@ -1,0 +1,6 @@
+
+- Add --oneline option to prevent column printing.
+- Ability to compare two layouts directly.
+- Graph printing, where counts are represented by bars.
+- General cleanup and modularization.
+- Comparison of other popular layouts using same metrics.
