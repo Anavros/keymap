@@ -3,6 +3,8 @@
 import argparse
 import readline
 import random
+
+from constants import LAYOUTDIR
 from layout import load
 
 word_cache = []
@@ -40,7 +42,7 @@ def load_word_cache(legal):
 
 def main(args):
     load_word_cache(set(args.allowed))
-    layout = load('/home/john/projects/keys/layouts/'+args.layout)
+    layout = load(args.layout)
     try:
         loop(layout, list(args.allowed))
     except (EOFError, KeyboardInterrupt):

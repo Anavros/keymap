@@ -9,6 +9,7 @@ import layout
 import collide
 import display
 import util
+import strip
 
 
 def allowed_chars(args):
@@ -51,13 +52,16 @@ def main(args):
 
     elif args.task == 'balance':
         unigrams = count.ngrams(args.file, 1, set(ascii_lowercase))
-        l, r = balance(keycounts, keymap)
+        l, r = balance.balance(unigrams, keylayout)
         util.display(l, args.minimum, label="Left:")
         util.display(r, args.minimum, label="Right:")
 
     elif args.task == 'hands':
         h = balance.hands(args.file, keylayout)
         util.display(h, args.minimum)
+
+    elif args.task == 'minify':
+        strip.minify(args.file)
 
     else:
         print("Unknown command: ", args.task)

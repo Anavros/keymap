@@ -6,6 +6,7 @@ Small, reusable utility functions to be used in other parts of the program.
 from sys import stdin
 from contextlib import contextmanager
 import operator
+from string import ascii_lowercase
 
 
 def contained(string, charset):

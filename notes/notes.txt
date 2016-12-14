@@ -1,42 +1,20 @@
-Good Combinations:
-eo-rh ao iu hu ft nl rh gt !tp !tc !ck ct cr cl cs
-
-e 8000 jqozwuibx
-s 5000 zjvxqbwkfgdmcyrp
-t 5000 jkvztqbgwmdfxyplc
-n 4000 zmjqxbvlhwyfkpcr
-i 4000 jqybxkuzpevwac
-a 4000 jqzxkuofwgiv
-r 4000 jrxzqhbkwlcvyfsdmn
-o 4000 zqxkjevaygb
-l 3000 jxqzvwmkhnrgbycdt
-d 2000 jzqfhdbpwkvxgmcuytsrl
-
-
-General Notes:
-- Pinky fingers are not very strong.
-- Whatever finger gets 'e' is going to be overworked.
 
 Layout Notes:
-'g' is in a weird spot regarding 'ing'
-    - Also not very good for 'ngth'
-curly brackets would mabye be better fit for where the <> are in qwerty
-! comes with = a lot but is really far away
-; is kinda hard to hit to be perfectly honest. not all code is python
-'-' is hard too
-the combination '->' is definitely too hard
+Shifting to hit number keys is difficult, but modless punctuation is so good.
+Something about switching shift hands to move between colons and other puncts.
+Specifically moving from [ to - to shift+1 and back to ].
+It's moving the pinky off of the ] down to the shift is what does it.
+Double shift should act like a shift lock, but I still want the light.
+'linux' is all typed on one hand.
 
-Punctuation Combinations:
-!=
-->
 
-^ 1 2 3 4 5 6 7 8 9 0 ? !
-$ % @ [ ] ~ ` { } ( ) - =
-   ; U L M W Z F R O " | + &
-   : u l m w z f r o ' _ * #
+~ 1 2 3 4 5 6 7 8 9 0 ! +
+` @ { } $ % ^ & * ( ) - =
+   : U L M W Z F R O " _ # |
+   ; u l m w z f r o ' [ ] /
     A I N T G B S H E P Y
     a i n t g b s h e p y
-     J X D K Q V C < > \
+     J X D K Q V C < > ?
      j x d k q v c , . /
 
 Alt-Graph Chars:
