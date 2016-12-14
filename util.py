@@ -65,5 +65,19 @@ def display(keycounts, minimum, label=None):
     print("Total:", total)
 
 
+def cache(keycounts):
+    for key, count in keycounts.items():
+        print("{}:{}".format(key, count))
+
+
+def uncache(path):
+    keycounts = {}
+    with read_file_or_stdin(path) as f:
+        for line in f:
+            key, count = line.strip().split(':')
+            keycounts[key] = int(count)
+    return keycounts
+
+
 def print_row(strings):
     print(("{:<9} " * len(strings)).format(*strings))

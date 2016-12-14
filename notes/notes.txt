@@ -4,18 +4,17 @@ Shifting to hit number keys is difficult, but modless punctuation is so good.
 Something about switching shift hands to move between colons and other puncts.
 Specifically moving from [ to - to shift+1 and back to ].
 It's moving the pinky off of the ] down to the shift is what does it.
-Double shift should act like a shift lock, but I still want the light.
 'linux' is all typed on one hand.
 
 
 ~ 1 2 3 4 5 6 7 8 9 0 ! +
 ` @ { } $ % ^ & * ( ) - =
-   : U L M W Z F R O " _ # |
-   ; u l m w z f r o ' [ ] /
+   X U L M W Z F R O J _ # |
+   x u l m w z f r o j [ ] /
     A I N T G B S H E P Y
     a i n t g b s h e p y
-     J X D K Q V C < > ?
-     j x d k q v c , . /
+     " : D K Q V C < > ?
+     ' ; d k q v c , . /
 
 Alt-Graph Chars:
 ∑ 2211 Epsilon

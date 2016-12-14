@@ -17,16 +17,16 @@ xkb_symbols "ox" {
     key <AE11> {[ minus, exclam, exclam, exclam ]};
     key <AE12> {[ equal, plus, U00A1, exclam ]};
 
-    key <AD01> {[ semicolon, colon, exclam, exclam ]};
+    key <AD01> {[ apostrophe, quotedbl, exclam, exclam ]};
     key <AD02> {[ u, U, U00B5, exclam ]};
     key <AD03> {[ l, L, U03BB, exclam ]};
     key <AD04> {[ m, M, U2206, exclam ]};
     key <AD05> {[ w, W, U2126, exclam ]};
     key <AD06> {[ z, Z, exclam, exclam ]};
-    key <AD07> {[ f, F, exclam, exclam ]};
+    key <AD07> {[ p, P, exclam, exclam ]};
     key <AD08> {[ r, R, exclam, exclam ]};
     key <AD09> {[ o, O, exclam, exclam ]};
-    key <AD10> {[ apostrophe, quotedbl, exclam, exclam ]};
+    key <AD10> {[ semicolon, colon, exclam, exclam ]};
     key <AD11> {[ bracketleft, underscore, exclam, exclam ]};
     key <AD12> {[ bracketright, numbersign, U2605, U2606 ]};
     key <BKSL> {[ backslash, bar, U2600, exclam ]};
@@ -40,7 +40,7 @@ xkb_symbols "ox" {
     key <AC07> {[ s, S, exclam, exclam ]};
     key <AC08> {[ h, H, exclam, exclam ]};
     key <AC09> {[ e, E, U2211, exclam ]};
-    key <AC10> {[ p, P, U220F, exclam ]};
+    key <AC10> {[ f, F, U220F, exclam ]};
     key <AC11> {[ y, Y, exclam, exclam ]};
 
     key <AB01> {[ j, J, exclam, exclam ]};
