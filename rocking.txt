@@ -1,0 +1,130 @@
+
+Examples of Good Rocking (on qwerty):
+yeah -- right index finger stretches to 'y'
+position, then left hand rocks from 'e' on middle
+finger to 'a' on pinky, then back to right index,
+still stretched in the same direction, on 'h'.
+
+toast -- left index stretched to 't', then right
+ring on 'o', 'as' rolls using left pinky and ring,
+finished by repeat of 't' with same finger.
+
+nation -- repeat on 'n' at beginning and end, 'a'
+then 't' rocks well on left hand, both keys can be
+touched simultaneously, 'io' is adjacent, 'n'
+rests in a special spot relative to 'io' that just
+feels right moving into. 'ioj' isn't as nice,
+'io;' is flimsy, 'ioy' is nice, there's a similar
+kind of stretch.
+
+ies -- 'es' rolls nicely, 'i' feels easy to time.
+ch (on ox) -- 'c' is hit with tucked index finger
+and 'h' with middle, common phrase, easy to time,
+no stretching.
+
+ing -- 'in' flows nicely and gives time for the
+left index finger to stretch to 'g'.
+
+tes/set -- the finger stretch sets up the rock
+perfectly, it's very satisfying. in 'set',
+pressing 's' with the ring finger moves the rest
+of the hand so that stretching upwards is natural.
+
+Counterexamples:
+pats -- keys line up but are pressed out of order,
+easy to type 'past', getting 's' and 't' mixed up.
+
+Spit -- with a capital 'S', 's' is hit with the
+left hand, requiring the right hand to move to
+shift, but 'p' is typed with the same right hand,
+causing a delay while the finger is moving.
+
+ing (on ox) -- 'in' is adjacent but 'g' is hit
+with the index finger of the same hand, the
+stretching misaligns the rest of the hand, losing
+confidence in finger placement.
+
+Observations:
+Sequences feel best when ending on a strong
+finger; either middle or first. These fingers
+might have more accurate timing.
+
+Keys are typed in multi-letter sequences. When
+typing a string of keys that is uncommon, you have
+to stop and think of the letters specifically,
+rather than using a known motion.
+
+Having common motions play well on the keyboard
+will go a long way in making it feel nice.
+
+Stretches might be useful after hitting a group of
+tight keys to move the hand away from the group.
+
+It's nice for groups to all be on the same row; if
+you're reaching up high, other high keys are going
+to be easier to hit than low or even middle keys.
+
+Hand stretching causes misalignment of the fingers
+of the same hand, leading to a loss of confidence
+in finger placement, a slowdown, and typos.
+
+Stretching is positive in some situations and
+negative in others.
+
+In general, 'se' and 'li' on qwerty, the middle
+ring and upper middle keys feel great pressed
+together. Even better when the index finger is
+then stretched out and hit afterwards.
+
+In fact, even though 'y' is typically very hard to
+hit, after 'li', it's practically nothing.
+
+'sc' and 'lm' on qwerty has the same effect. It's
+an easy rocking motion between the center ring
+position and the tucked index.
+
+Surprisingly, moving between the center middle and
+center index postions is not always that easy.
+They both want to activate at the same time,
+creating slight out-of-order typos.
+
+Center middle with upper index is ok; better on
+the right than the left because of row offsets.
+
+Upper middle with center index is good too.
+
+'ty' is nice because both hands stretch evenly.
+
+There's a slight pause in the phrase 'jou', as the
+index finger is moving over the 'u'. The 'o' can
+not fire until 'u' is ready, or else the timing of
+the movement will be off.
+
+'xc' is nice because it is adjacent on the bottom
+row; both keys are typically hard to hit but easy
+when the hand is already in the right position.
+
+The upper middle position is actually very
+versatile: it transitions well into all index and
+ring postions, although it is still weak moving
+into the pinky. Actually, I will note that ring is
+better moving into upper middle than the other way
+around.
+
+The pinky pairs well with any index position, even
+the worst stretches, in either direction. The ring
+finger is a bad match because it is too close not
+much stronger than the pinky.
+
+It might stand to reason that because the pinkies
+hit the shift keys the index fingers are the
+easiest positions to shift. Although practically
+it might not make a huge difference.
+
+Being able to move in easy phrases makes a huge
+difference in speed.
+
+I think the thing with stretched combinations is
+that the stretch takes time to achieve but is more
+structurally stable, allowing more precision by
+leveraging the wrist.

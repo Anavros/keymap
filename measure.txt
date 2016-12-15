@@ -1,0 +1,9 @@
+
+The measure of difficulty transitioning from one
+key to the next involves...
+
+What finger and position?
+Is the hand moved up or down a row?
+Is the hand stretched or out of place?
+What direction was the last movement?
+Is this the same hand as the last key?
